@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from datetime import date
 from inspect import _void
 import requests
@@ -15,10 +16,10 @@ site="https://www.mongard.ir"
 # url = "https://www.mongard.ir/courses/python-beginner-course/"
 # url = "https://www.mongard.ir/courses/django-beginners/"
 url = "https://www.mongard.ir/one_part/?page="
-for page in range(1,11):
+for page in range(1,12):
     url_page=url+str(page)
 
-    request = requests.get(url)
+    request = requests.get(url_page)
     soup = BeautifulSoup(request.content, 'html.parser')
     title = soup.title.text
 
@@ -26,8 +27,8 @@ for page in range(1,11):
     # links= soup.find_all('a', class_='episode_link')
     links= soup.find_all('a', class_='one_part_link')
     # data = data[1:]
-    print(title)
-    print(links)
+    # print(title)
+    # print(links)
     # print(res.get_text())
     i=0
     j=15
@@ -35,6 +36,8 @@ for page in range(1,11):
         # name=link.find('div', attrs={'class':'_3wU53n'})
         # print(link)
         episode_url=link.get('href')
+        # print(episode_url)
+        episode_id=episode_url.split('/')[-3]
         # print(f"{site}{episode_url}")
         episode_link=requests.get(f"{site}{episode_url}")
         # print("episode_link",episode_link.url)
@@ -42,16 +45,18 @@ for page in range(1,11):
         description = episode.find('article', attrs={'class':'description_container'})
         # description = episode.find('div', attrs={'class':'episode_top_description'})
         description_text = description.get_text()
+        
         # print(description_text)
         article_name=episode.find('h1').text
         # print(article_name.text)
-        dir=str(page)+"/"+article_name
+        # dir="one_part/"+str(page)+"/"+str(episode_id)+"-"+article_name
+        dir="one_part/"+str(episode_id)+"-"+article_name
         article_file=dir+"/"+article_name+".txt"
         # print(article_file)
         # import os
         # os.makedirs(article_file, exist_ok=True)
         
-        os.makedirs(os.path.dirname(dir), exist_ok=True)
+        os.makedirs(os.path.dirname(article_file), exist_ok=True)
 
         from pathlib import Path
         # import errno
@@ -65,6 +70,7 @@ for page in range(1,11):
         # Path(str(page)+"/"+article_name).mkdir(parents=True, exist_ok=True)
         with open(article_file, 'w', encoding="utf-8") as f:
             f.write(description_text)
+            print(f"{article_file} is created")
 
         # video_iframe=episode.find('iframe')
         # video_link=video_iframe.get('src')
