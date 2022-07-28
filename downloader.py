@@ -16,7 +16,34 @@ site="https://www.mongard.ir"
 url = "https://www.mongard.ir/courses/docker/"
 # url = "https://www.mongard.ir/one_part/"
 
-request = requests.get(url)
+
+cookies = {
+    'csrftoken': 'gfEmMPYIqn4huywq1map5HXKVSWB0mEBWDEZKXpNxNXNoMZwlKFLSvu4sZPy32NC',
+    'sessionid': 'socz1xj0wuaut0orr5z9g3jiarsw42fr',
+}
+
+headers = {
+    'authority': 'www.mongard.ir',
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'accept-language': 'en-US;q=0.9',
+    # Requests sorts cookies= alphabetically
+    # 'cookie': 'csrftoken=gfEmMPYIqn4huywq1map5HXKVSWB0mEBWDEZKXpNxNXNoMZwlKFLSvu4sZPy32NC; sessionid=socz1xj0wuaut0orr5z9g3jiarsw42fr',
+    'referer': 'https://www.mongard.ir/courses/docker/',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'same-origin',
+    'sec-fetch-user': '?1',
+    'sec-gpc': '1',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36',
+}
+# response = requests.get('https://www.mongard.ir/courses/docker/episode/593/docker-basic-commands/', cookies=cookies, headers=headers)
+
+
+
+
+
+request = requests.get(url, cookies=cookies, headers=headers)
 soup = BeautifulSoup(request.content, 'html.parser')
 title = soup.title.text
 
@@ -25,18 +52,19 @@ links= soup.find_all('a', class_='episode_link')
 # links= soup.find_all('a', class_='one_part_link')
 # data = data[1:]
 print(title)
-print(links)
+# print(links)
 # print(res.get_text())
-i=0
-j=3
+i=15
+j=18
 for link in links[i:j]:
     # name=link.find('div', attrs={'class':'_3wU53n'})
     # print(link)
     episode_url=link.get('href')
     # print(f"{site}{episode_url}")
-    episode_link=requests.get(f"{site}{episode_url}")
-    # print("episode_link",episode_link.url)
+    episode_link=requests.get(f"{site}{episode_url}", cookies=cookies, headers=headers)
+    print("episode_link",episode_link.url)
     episode=BeautifulSoup(episode_link.content, 'html.parser')
+    # print(episode)
     video_iframe=episode.find('iframe')
     video_link=video_iframe.get('src')
     # print("video link=",video_link)
@@ -54,7 +82,7 @@ for link in links[i:j]:
     arg = f" -vvv {video_id} --sout=#transcode{{vcodec=h264,vb=1200,acodec=mp4a,ab=192,channels=2,deinterlace}}:standard{{access=file,mux=ts,dst={i}-{id}-{name}.mp4}}"
     i+=1
     # print(arg)
-    vlc= "C:/Users/HP/Downloads/Compressed/VLC/vlc.exe" + arg
+    vlc= "C:/Users/ErtebateWeb/Downloads/Compressed/VLC/vlc.exe" + arg
     # print(vlc)
     list=vlc.split(' ')
     p=  subprocess.Popen(list)
