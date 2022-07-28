@@ -13,22 +13,22 @@ import json
 # url = "https://www.mongard.ir/courses/"
 site="https://www.mongard.ir"
 # url = "https://www.mongard.ir/courses/python-beginner-course/"
-url = "https://www.mongard.ir/courses/docker/"
-# url = "https://www.mongard.ir/one_part/"
+# url = "https://www.mongard.ir/courses/django-beginners/"
+url = "https://www.mongard.ir/one_part/"
 
 request = requests.get(url)
 soup = BeautifulSoup(request.content, 'html.parser')
 title = soup.title.text
 
 # links= soup.find_all('a', class_='course_link')
-links= soup.find_all('a', class_='episode_link')
-# links= soup.find_all('a', class_='one_part_link')
+# links= soup.find_all('a', class_='episode_link')
+links= soup.find_all('a', class_='one_part_link')
 # data = data[1:]
 print(title)
 print(links)
 # print(res.get_text())
 i=0
-j=3
+j=14
 for link in links[i:j]:
     # name=link.find('div', attrs={'class':'_3wU53n'})
     # print(link)
@@ -39,14 +39,14 @@ for link in links[i:j]:
     episode=BeautifulSoup(episode_link.content, 'html.parser')
     video_iframe=episode.find('iframe')
     video_link=video_iframe.get('src')
-    # print("video link=",video_link)
+    print("video link=",video_link)
     splited_url=video_link.split('=')
     video_id=splited_url[1]
     epl=str(episode_link.url)
     name = epl.split('/')[-2]
     print(name)
     id= epl.split('/')[-3]
-    print(id)
+    # print(id)
     video_id=video_id.replace('origin_config.json','h_,1080_1200,k.mp4.list/index-f1-v1-a1.m3u8')
     print("video_id=",video_id)
     # https://mongard.arvanvod.com/WXoB7mjqNk/1ka6q27DzZ/h_,1080_1200,k.mp4.list/index-f1-v1-a1.m3u8
@@ -57,7 +57,7 @@ for link in links[i:j]:
     vlc= "C:/Users/HP/Downloads/Compressed/VLC/vlc.exe" + arg
     # print(vlc)
     list=vlc.split(' ')
-    p=  subprocess.Popen(list)
+    # p=  subprocess.Popen(list)
 
 
 
