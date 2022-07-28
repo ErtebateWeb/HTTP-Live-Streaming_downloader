@@ -28,7 +28,7 @@ print(title)
 print(links)
 # print(res.get_text())
 i=0
-j=14
+j=1
 for link in links[i:j]:
     # name=link.find('div', attrs={'class':'_3wU53n'})
     # print(link)
@@ -51,13 +51,54 @@ for link in links[i:j]:
     print("video_id=",video_id)
     # https://mongard.arvanvod.com/WXoB7mjqNk/1ka6q27DzZ/h_,1080_1200,k.mp4.list/index-f1-v1-a1.m3u8
     # arg = f" -I dummy -vvv {video_id} --sout=#transcode{{vcodec=h264,vb=1200,acodec=mp4a,ab=192,channels=2,deinterlace}}:standard{{access=file,mux=ts,dst={i}-{id}-{name}.mp4}}"
-    arg = f" -vvv {video_id} --sout=#transcode{{vcodec=h264,vb=1200,acodec=mp4a,ab=192,channels=2,deinterlace}}:standard{{access=file,mux=ts,dst={i}-{id}-{name}.mp4}}"
-    i+=1
+    # arg = f" -vvv {video_id} --sout=#transcode{{vcodec=h264,vb=1200,acodec=mp4a,ab=192,channels=2,deinterlace}}:standard{{access=file,mux=ts,dst={id}-{name}.mp4}}"
+    # i+=1
+    # # print(arg)
+    # vlc= "C:/Users/ErtebateWeb/Downloads/Compressed/VLC/vlc.exe" + arg
+    # # vlc= "C:/Users/HP/Downloads/Compressed/VLC/vlc.exe" + arg
+    # # print(vlc)
+    # list=vlc.split(' ')
+    
+    
+    
+    description = episode.find('article', attrs={'class':'description_container'})
+        # description = episode.find('div', attrs={'class':'episode_top_description'})
+    description_text = description.get_text()
+    article_name=episode.find('h1').text
+    # print(article_name.text)
+    # dir="one_part/"+str(page)+"/"+str(episode_id)+"-"+article_name
+    dir="one_part/"+str(id)+"-"+article_name
+    directory="one_part/"+str(id)+"-"+article_name+"/"
+    article_file=dir+"/"+article_name+".txt"
+    # print(article_file)
+    # import os
+    # os.makedirs(article_file, exist_ok=True)
+
+    os.makedirs(os.path.dirname(article_file), exist_ok=True)
+
+    from pathlib import Path
+    # import errno
+
+    # if not os.path.exists(os.path.dirname(article_file)):
+    #     try:
+    #         os.makedirs(os.path.dirname(article_file))
+    #     except OSError as exc: #
+    #         if exc.errno != errno.EEXIST:
+    #             raise
+    # Path(str(page)+"/"+article_name).mkdir(parents=True, exist_ok=True)
+    with open(article_file, 'w', encoding="utf-8") as f:
+        f.write(description_text)
+        print(f"{article_file} is created")
+    # video_file=dir+"/"+article_name+".mp4"
+        file_mp4="one_part/"+id+"-"+name+".mp4"
+        arg = f" -vvv {video_id} --sout=#transcode{{vcodec=h264,vb=1200,acodec=mp4a,ab=192,channels=2,deinterlace}}:standard{{access=file,mux=ts,dst={file_mp4}}}"
+    # i+=1
     # print(arg)
-    vlc= "C:/Users/HP/Downloads/Compressed/VLC/vlc.exe" + arg
+        vlc= "C:/Users/ErtebateWeb/Downloads/Compressed/VLC/vlc.exe" + arg
+    # vlc= "C:/Users/HP/Downloads/Compressed/VLC/vlc.exe" + arg
     # print(vlc)
-    list=vlc.split(' ')
-    # p=  subprocess.Popen(list)
+        list=vlc.split(' ')    
+        p=  subprocess.Popen(list)
 
 
 
