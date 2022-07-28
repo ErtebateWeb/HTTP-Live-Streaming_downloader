@@ -13,9 +13,9 @@ import json
 # url = "https://www.mongard.ir/courses/"
 site="https://www.mongard.ir"
 # url = "https://www.mongard.ir/courses/python-beginner-course/"
-url = "https://www.mongard.ir/courses/docker/"
+# url = "https://www.mongard.ir/courses/docker/"
 # url = "https://www.mongard.ir/one_part/"
-
+url = input("Please enter course url:")
 
 cookies = {
     'csrftoken': 'gfEmMPYIqn4huywq1map5HXKVSWB0mEBWDEZKXpNxNXNoMZwlKFLSvu4sZPy32NC',
@@ -54,8 +54,11 @@ links= soup.find_all('a', class_='episode_link')
 print(title)
 # print(links)
 # print(res.get_text())
-i=15
-j=18
+# i=15
+i= int(input("from which episode do you want to download?"))
+# j=18
+j= int(input("until which episode do you want to download?"))
+j=j+1
 for link in links[i:j]:
     # name=link.find('div', attrs={'class':'_3wU53n'})
     # print(link)

@@ -15,6 +15,7 @@ site="https://www.mongard.ir"
 # url = "https://www.mongard.ir/courses/python-beginner-course/"
 # url = "https://www.mongard.ir/courses/django-beginners/"
 url = "https://www.mongard.ir/one_part/"
+# url=input("please enter one_part url :")
 
 request = requests.get(url)
 soup = BeautifulSoup(request.content, 'html.parser')
