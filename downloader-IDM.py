@@ -23,7 +23,8 @@ def IDM_download(i,video_url,episode_url,course_title):
     url=str(video_url)
     # url = "https://mongard.arvanvod.com/oy1xeb8BG0/Db4oaL9rNv/origin_Z0JPphkx0GqtJXfg4mDc6mS3JPQdg7VdHCLM5v2E.mp4"
     output=f"{i}-{course_title_en}-{episode_id}-{episode_title}.mp4"
-    downloader.download(url, f"c:\DOWNLOADS\{course_title}", output=output, referrer=None, cookie=None, postData=None, user=None, password=None, confirm = False, lflag = None, clip=False)
+    # flag=2
+    downloader.download(url, f"c:\DOWNLOADS\{course_title}", output=output, referrer=None, cookie=None, postData=None, user=None, password=None, confirm = False, lflag =None , clip=False)
 
 
 
