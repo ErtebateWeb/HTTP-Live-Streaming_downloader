@@ -94,8 +94,8 @@ with open(article_file, 'w', encoding="utf-8") as f:
     arg = f" -vvv {video_id} --sout=#transcode{{vcodec=h264,vb=1200,acodec=mp4a,ab=192,channels=2,deinterlace}}:standard{{access=file,mux=ts,dst={file_mp4}}}"
 # i+=1
 # print(arg)
-    vlc= "C:/Users/ErtebateWeb/Downloads/Compressed/VLC/vlc.exe" + arg
-# vlc= "C:/Users/HP/Downloads/Compressed/VLC/vlc.exe" + arg
+    # vlc= "C:/Users/ErtebateWeb/Downloads/Compressed/VLC/vlc.exe" + arg
+    vlc= "C:/Users/HP/Downloads/Compressed/VLC/vlc.exe" + arg
 # print(vlc)
     list=vlc.split(' ')    
     p=  subprocess.Popen(list)

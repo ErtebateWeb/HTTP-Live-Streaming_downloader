@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import sys
 import os
 import subprocess
+import config
 
 import json
 # a python program to get tre courses link from the website and save it in a json file then download the courses and convert them with vlc
@@ -17,34 +18,11 @@ site="https://www.mongard.ir"
 # url = "https://www.mongard.ir/one_part/"
 url = input("Please enter course url:")
 
-cookies = {
-    'csrftoken': 'FE6JXJAAUq26XEr6VExslmrpUV4uEBRlPO3tGorrnGik08PgFHu3sRkgB13PyTbW',
-    'sessionid': 't8bl3p6nr4epi3r5vv841opceq5xrvpo',
-}
-
-headers = {
-    'authority': 'www.mongard.ir',
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-    'accept-language': 'en-US;q=0.9',
-    'cache-control': 'max-age=0',
-    # Requests sorts cookies= alphabetically
-    # 'cookie': 'csrftoken=FE6JXJAAUq26XEr6VExslmrpUV4uEBRlPO3tGorrnGik08PgFHu3sRkgB13PyTbW; sessionid=t8bl3p6nr4epi3r5vv841opceq5xrvpo',
-    'referer': 'https://www.mongard.ir/courses/?page=2',
-    'sec-fetch-dest': 'document',
-    'sec-fetch-mode': 'navigate',
-    'sec-fetch-site': 'same-origin',
-    'sec-fetch-user': '?1',
-    'sec-gpc': '1',
-    'upgrade-insecure-requests': '1',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36',
-}
-# response = requests.get('https://www.mongard.ir/courses/docker/episode/593/docker-basic-commands/', cookies=cookies, headers=headers)
 
 
 
 
-
-request = requests.get(url, cookies=cookies, headers=headers)
+request = requests.get(url, cookies=config.cookies, headers=config.headers)
 soup = BeautifulSoup(request.content, 'html.parser')
 title = soup.title.text
 
@@ -65,7 +43,7 @@ for link in links[i:j]:
     # print(link)
     episode_url=link.get('href')
     # print(f"{site}{episode_url}")
-    episode_link=requests.get(f"{site}{episode_url}", cookies=cookies, headers=headers)
+    episode_link=requests.get(f"{site}{episode_url}", cookies=config.cookies, headers=config.headers)
     print("episode_link",episode_link.url)
     episode=BeautifulSoup(episode_link.content, 'html.parser')
     # print(episode)

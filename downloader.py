@@ -70,9 +70,9 @@ for link in links[i:j]:
     # print(vlc)
     list=vlc.split(' ')
     p=  subprocess.Popen(list)
-    if i%5==0:
+    if i%2==0:
         print("sleep")
-        time.sleep(1200)
+        time.sleep(1500)
 
 
 
