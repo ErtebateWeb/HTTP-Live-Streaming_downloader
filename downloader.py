@@ -7,10 +7,6 @@ import sys
 import os
 import subprocess
 import config
-<<<<<<< HEAD
-=======
-
->>>>>>> c03a6fae3a851ccd2c4d543ba7485cdaa6c9f354
 import json
 # a python program to get tre courses link from the website and save it in a json file then download the courses and convert them with vlc
 # the link is https://www.mongard.ir/courses/
@@ -21,17 +17,6 @@ site="https://www.mongard.ir"
 # url = "https://www.mongard.ir/courses/docker/"
 # url = "https://www.mongard.ir/one_part/"
 url = input("Please enter course url:")
-
-<<<<<<< HEAD
-
-
-
-=======
-
-
-
-
->>>>>>> c03a6fae3a851ccd2c4d543ba7485cdaa6c9f354
 request = requests.get(url, cookies=config.cookies, headers=config.headers)
 soup = BeautifulSoup(request.content, 'html.parser')
 title = soup.title.text
