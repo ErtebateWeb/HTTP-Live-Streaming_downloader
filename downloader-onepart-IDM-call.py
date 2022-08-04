@@ -27,44 +27,45 @@ def IDM_download(i,video_url,episode_url,course_title):
     call([IDM, '/d',video_url, '/p',f"c:\DOWNLOADS\{course_title}", '/f', output, '/n', '/a'])
 
 
+for p in range(1,12):
+        
 
+    site="https://www.mongard.ir"
+    url = f"https://www.mongard.ir/one_part/?page={p}"
 
-site="https://www.mongard.ir"
-url = "https://www.mongard.ir/one_part/?page=2"
+    request = requests.get(url)
+    soup = BeautifulSoup(request.content, 'html.parser')
+    title = soup.title.text
 
-request = requests.get(url)
-soup = BeautifulSoup(request.content, 'html.parser')
-title = soup.title.text
+    links= soup.find_all('a', class_='one_part_link')
+    print(title)
+    # print(links)
+    # print(res.get_text())
+    i=0
+    j=15
+    for link in links[i:j]:
+        # print(link)
+        episode_url=link.get('href')
+        print(f"{site}{episode_url}")
+        episode_link=requests.get(f"{site}{episode_url}")
+        print("episode_link",episode_link.url)
+        episode=BeautifulSoup(episode_link.content, 'html.parser')
 
-links= soup.find_all('a', class_='one_part_link')
-print(title)
-# print(links)
-# print(res.get_text())
-i=0
-j=15
-for link in links[i:j]:
-    # print(link)
-    episode_url=link.get('href')
-    print(f"{site}{episode_url}")
-    episode_link=requests.get(f"{site}{episode_url}")
-    print("episode_link",episode_link.url)
-    episode=BeautifulSoup(episode_link.content, 'html.parser')
+        article_link=str(episode_link.url)
+        article_id=article_link.split('/')[-3]
+        article_name_en=article_link.split('/')[-2]
 
-    article_link=str(episode_link.url)
-    article_id=article_link.split('/')[-3]
-    article_name_en=article_link.split('/')[-2]
+        article_name=episode.find('h1').text
+        dir="one_part/"+str(article_id)+"-"+article_name
+        directory="one_part/"+str(article_id)+"-"+article_name+"/"
+        article_file=dir+"/"+article_name+".txt"
 
-    article_name=episode.find('h1').text
-    dir="one_part/"+str(article_id)+"-"+article_name
-    directory="one_part/"+str(article_id)+"-"+article_name+"/"
-    article_file=dir+"/"+article_name+".txt"
-
-    os.makedirs(os.path.dirname(article_file), exist_ok=True)
-    from pathlib import Path
-    article_url=site+link.get('href')
-    print(episode_url)
-    article_mp4_url=episode.find('source', type="video/mp4").get('src')
-    # print(episode_mp4_url)    
-    IDM_download(i,article_mp4_url,article_url,article_name)
+        os.makedirs(os.path.dirname(article_file), exist_ok=True)
+        from pathlib import Path
+        article_url=site+link.get('href')
+        print(episode_url)
+        article_mp4_url=episode.find('source', type="video/mp4").get('src')
+        # print(episode_mp4_url)    
+        IDM_download(i,article_mp4_url,article_url,article_name)
 
 
