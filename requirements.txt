@@ -1,7 +1,11 @@
 beautifulsoup4==4.11.1
 certifi==2022.6.15
 charset-normalizer==2.1.0
+comtypes==1.1.11
+idm==0.39
 idna==3.3
+pypiwin32==223
+pywin32==304
 requests==2.28.1
 soupsieve==2.3.2.post1
 urllib3==1.26.11
